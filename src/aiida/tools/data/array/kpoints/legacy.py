@@ -999,7 +999,8 @@ def find_bravais_info(cell, pbc, epsilon_length=_default_epsilon_length, epsilon
 
         # build a length-2 list with the 2D cell lattice vectors
         list_vectors = ['a1', 'a2', 'a3']
-        vectors = [eval(list_vectors[i]) for i in in_plane_indexes]
+        scope = locals()
+        vectors = [eval(list_vectors[i], scope) for i in in_plane_indexes]
         # build a length-2 list with the norms of the 2D cell lattice vectors
         lens = [numpy.linalg.norm(v) for v in vectors]
         # cosine of the angle between the two primitive vectors

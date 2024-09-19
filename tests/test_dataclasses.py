@@ -3364,6 +3364,19 @@ class TestKpointsData:
         assert round(abs(point_coords['Z'][2] - np.pi / alat), 7) == 0
         assert round(abs(point_coords['Z'][0] - 0.0), 7) == 0
 
+    def test_legacy_2d(self):
+        """This is test for the legacy method on 2D structures."""
+        from aiida.tools.data.array.kpoints import get_kpoints_path
+
+        cell_x = [[1, 0, 0], [0, 2, 0], [0, 0, 15]]
+        s = StructureData(cell=cell_x, pbc=[True, True, False])
+        result = get_kpoints_path(s, method='legacy')
+
+        assert isinstance(result['parameters'], Dict)
+
+        path = result['parameters'].dict.path
+        assert path == [('G', 'X'), ('X', 'S'), ('S', 'Y'), ('Y', 'G')]
+
 
 class TestSpglibTupleConversion:
     """Tests for conversion of Spglib tuples."""
